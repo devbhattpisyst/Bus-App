@@ -32,7 +32,8 @@ class DriverLogin extends GetView<DriverLoginController> {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   borderRadius: BorderRadius.circular(size.height * .02)),
-              padding: EdgeInsets.fromLTRB(size.width * .04, size.height * .03, size.width * .04, size.height * .03),
+              padding: EdgeInsets.fromLTRB(size.width * .04, size.height * .03,
+                  size.width * .04, size.height * .03),
               // height: size.height * .55,
               width: size.width * .9,
               child: Column(
@@ -65,10 +66,13 @@ class DriverLogin extends GetView<DriverLoginController> {
                       // onChanged: controller.emailChanged,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: size.height * .01, vertical: size.height * .01),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: size.height * .01,
+                            vertical: size.height * .01),
                         hintText: "bus@gmail.com",
-                        hintStyle: TextStyle(fontSize: size.height * .02, color: Colors.grey.shade500),
+                        hintStyle: TextStyle(
+                            fontSize: size.height * .02,
+                            color: Colors.grey.shade500),
                         // filled: true,
 
                         // errorText: controller.emailError.value.isEmpty ? null : controller.emailError.value,
@@ -134,13 +138,20 @@ class DriverLogin extends GetView<DriverLoginController> {
                                 ),
                                 // onChanged: controller.passwordChanged,
                                 obscureText: data.value,
-                                validator: (value) => value == "" ? "Please Enter Password" : null,
+                                validator: (value) => value == ""
+                                    ? "Please Enter Password"
+                                    : null,
                                 decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: size.height * .01, vertical: size.height * .01),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: size.height * .01,
+                                      vertical: size.height * .01),
                                   hintText: "Bus@123",
-                                  hintStyle: TextStyle(fontSize: size.height * .02, color: Colors.grey.shade500),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(size.height * .01)),
+                                  hintStyle: TextStyle(
+                                      fontSize: size.height * .02,
+                                      color: Colors.grey.shade500),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          size.height * .01)),
                                   filled: true,
                                   // errorText:
                                   // controller.passwordError.value.isEmpty ? null : controller.passwordError.value,
@@ -158,12 +169,14 @@ class DriverLogin extends GetView<DriverLoginController> {
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     width: 1,
                                   )),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     width: 1,
                                   )),
                                   suffixIcon: Obx(() => GestureDetector(
@@ -173,17 +186,25 @@ class DriverLogin extends GetView<DriverLoginController> {
                                         child: Container(
                                             height: size.height * .05,
                                             decoration: BoxDecoration(
-                                                color: Theme.of(context).colorScheme.primaryContainer.withOpacity(.3),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer
+                                                    .withOpacity(.3),
                                                 borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(size.height * .005),
-                                                  bottomRight: Radius.circular(size.height * .005),
+                                                  topRight: Radius.circular(
+                                                      size.height * .005),
+                                                  bottomRight: Radius.circular(
+                                                      size.height * .005),
                                                 )),
                                             child: Icon(
-                                              data.value ? Icons.visibility_off : Icons.visibility,
+                                              data.value
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
                                               // color: CustomTheme.white,
                                             )),
                                       )),
-                                  fillColor: Theme.of(context).colorScheme.surface,
+                                  fillColor:
+                                      Theme.of(context).colorScheme.surface,
                                 ),
                               ),
                           true.obs)),
@@ -201,15 +222,18 @@ class DriverLogin extends GetView<DriverLoginController> {
                                   visible: visible.value,
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      FocusManager.instance.primaryFocus?.unfocus();
+                                      // FocusManager.instance.primaryFocus
+                                      //     ?.unfocus();
                                       visible.value = false;
                                       controller.login();
                                       visible.value = true;
                                     },
-                                    style: ElevatedButton.styleFrom(shape: BeveledRectangleBorder()),
+                                    style: ElevatedButton.styleFrom(
+                                        shape: BeveledRectangleBorder()),
                                     child: Text(
                                       "LOGIN",
-                                      style: TextStyle(fontSize: size.height * .02),
+                                      style: TextStyle(
+                                          fontSize: size.height * .02),
                                     ),
                                   ),
                                 ),
@@ -248,7 +272,9 @@ class DriverLogin extends GetView<DriverLoginController> {
                           ),
                           child: Text(
                             "Create Account",
-                            style: TextStyle(overflow: TextOverflow.ellipsis, fontSize: size.height * .017),
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: size.height * .017),
                           ),
                         ),
                       ),

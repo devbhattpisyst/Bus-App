@@ -19,21 +19,25 @@ class DashboardController extends GetxController
   // TabController(length: 2, vsync: this); // Initialize TabController here;
   var loading = true.obs;
   var busStopsSorted = <BusStop>[].obs;
-  late var busstop;
+
   var busStops = <BusStop>[].obs;
   //var busStopsDetails = <Trip>[].obs;
+  var filteredTrips = [].obs;
   var busstoparray = <Trip>[].obs;
   var trips = <TripData>[].obs;
   static var latitude;
   static var longitude;
+  String terminal1 = "";
+  String terminal2 = "";
+  List<dynamic> filteredList = [];
 
   @override
   void onInit() async {
     super.onInit();
-    Position loc = await determinePosition();
-    busstop = 1;
-    latitude = loc.latitude;
-    longitude = loc.longitude;
+    Position? loc = await determinePosition();
+
+    latitude = loc?.latitude;
+    longitude = loc?.longitude;
     tabController =
         TabController(length: 2, vsync: this); // Initialize TabController here
 
@@ -42,32 +46,33 @@ class DashboardController extends GetxController
     getTrips();
   }
 
-  // Future<int> fetchBusStop() async {
-  //   try {
-  //     var response =
-  //         await http.get(Uri.parse("${Constants.baseUrl}Bus/getTripByStop"));
-  //     if (response.statusCode == 200) {
-  //       var jsonResponse = json.decode(response.body);
-  //       int busstop = jsonResponse[
-  //           'busstop']; // Replace "your_busstop_key_here" with the actual key
-  //       return busstop;
-  //     } else {
-  //       // Handle error response
-  //       print("Failed to fetch busstop: ${response.statusCode}");
-  //       return 0; // Return empty string or throw an error
-  //     }
-  //   } catch (e) {
-  //     // Handle network or parsing errors
-  //     print("Error fetching busstop: $e");
-  //     return 0; // Return empty string or throw an error
-  //   }
-  // }
+  SearchStartRoutePoint() {
+    filteredTrips.clear(); // Clear the previous results
+    log("calling....");
+    filteredTrips.addAll(trips.where((trip) {
+      return trip.startRoutePoint
+              .toLowerCase()
+              .contains(terminal1.toLowerCase()) &&
+          trip.endRoutePoint.toLowerCase().contains(terminal2.toLowerCase());
+    }).toList());
+  }
 
-  getstopsdetails() async {
+  SearchEndRoutePoint() {
+    filteredTrips.clear();
+    log("Calling....");
+    filteredTrips.addAll(trips.where((trip) {
+      return trip.endRoutePoint
+              .toLowerCase()
+              .contains(terminal2.toLowerCase()) &&
+          trip.startRoutePoint.toLowerCase().contains(terminal1.toLowerCase());
+    }).toList());
+  }
+
+  getstopsdetails(busstopid) async {
     // log("calling");
     try {
       var value = await BusStopsDetailsProvider()
-          .getBusStopDetails({"busstop": busstop});
+          .getBusStopDetails({"busstop": busstopid});
       if (value != null) {
         busstoparray.value = value.payload.data;
         log("hello we are bus stop details  => " + value.toString());

@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
-
-import 'package:bus/controller/passenger_controllers/signup_controller.dart';
 import 'package:bus/geo/locator.dart';
 import 'package:bus/models/driver/driver_login_model.dart';
 import 'package:bus/provider/all_bus_stop_provider.dart';
@@ -23,7 +20,7 @@ class DriverDashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     driverTripdetails = Get.arguments[0]['data'];
-    print("Trip details\n" + jsonEncode(driverTripdetails.toString()));
+    print("Trip details\n" + driverTripdetails.toString());
     super.onInit();
   }
 
@@ -37,7 +34,6 @@ class DriverDashController extends GetxController {
   }
 
   startTrip() {
-    // PassengerSignupController
     DriverTripProvider().startTrip(
         {"tripId": driverTripdetails[currentTripindex].tripId}).then((value) {
       if (value != null) {

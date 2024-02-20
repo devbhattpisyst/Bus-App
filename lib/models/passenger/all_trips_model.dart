@@ -3,9 +3,11 @@ import 'dart:convert';
 // To parse this JSON data, do
 // final allTripsResponseModel = AllTripsResponseModel.fromJson(jsonString);
 
-AllTripsResponseModel allTripsResponseModelFromJson(String str) => AllTripsResponseModel.fromJson(json.decode(str));
+AllTripsResponseModel allTripsResponseModelFromJson(String str) =>
+    AllTripsResponseModel.fromJson(json.decode(str));
 
-String allTripsResponseModelToJson(AllTripsResponseModel data) => json.encode(data.toJson());
+String allTripsResponseModelToJson(AllTripsResponseModel data) =>
+    json.encode(data.toJson());
 
 class AllTripsResponseModel {
   AllTripsResponseModel({
@@ -18,7 +20,8 @@ class AllTripsResponseModel {
   final Payload payload;
   final Error error;
 
-  factory AllTripsResponseModel.fromJson(Map<String, dynamic> json) => AllTripsResponseModel(
+  factory AllTripsResponseModel.fromJson(Map<String, dynamic> json) =>
+      AllTripsResponseModel(
         success: json["success"],
         payload: Payload.fromJson(json["payload"]),
         error: Error.fromJson(json["error"]),
@@ -42,7 +45,8 @@ class Payload {
 
   factory Payload.fromJson(Map<String, dynamic> json) => Payload(
         message: json["message"],
-        data: List<TripData>.from(json["data"].map((x) => TripData.fromJson(x))),
+        data:
+            List<TripData>.from(json["data"].map((x) => TripData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,21 +86,38 @@ class TripData {
   final String startRoutePoint;
   final String endRoutePoint;
 
-  factory TripData.fromJson(Map<String, dynamic> json) => TripData(
-        tripID: json["TripID"],
-        routeID: json["RouteID"],
-        driverID: json["DriverID"],
-        busID: json["BusID"],
-        startTime: json["StartTime"],
-        status: json["Status"],
-        createdDateTime: json["CreatedDateTime"],
-        updatedDateTime: json["UpdatedDateTime"],
-        busNumber: json["BusNumber"],
-        lastName: json["LastName"],
-        firstName: json["FirstName"],
-        startRoutePoint: json["startRoutepoint"],
-        endRoutePoint: json["endRoutepoint"],
-      );
+  // factory TripData.fromJson(Map<String, dynamic> json) => TripData(
+  //       tripID: json["TripID"],
+  //       routeID: json["RouteID"],
+  //       driverID: json["DriverID"],
+  //       busID: json["BusID"],
+  //       startTime: json["StartTime"],
+  //       status: json["Status"],
+  //       createdDateTime: json["CreatedDateTime"],
+  //       updatedDateTime: json["UpdatedDateTime"],
+  //       busNumber: json["BusNumber"],
+  //       lastName: json["LastName"],
+  //       firstName: json["FirstName"],
+  //       startRoutePoint: json["startRoutepoint"],
+  //       endRoutePoint: json["endRoutepoint"],
+  //     );
+  factory TripData.fromJson(Map<String, dynamic> json) {
+    return TripData(
+      tripID: json["TripID"] ?? "",
+      routeID: json["RouteID"] ?? "",
+      driverID: json["DriverID"] ?? "",
+      busID: json["BusID"] ?? "",
+      startTime: json["StartTime"] ?? "",
+      status: json["Status"] ?? "",
+      createdDateTime: json["CreatedDateTime"] ?? "",
+      updatedDateTime: json["UpdatedDateTime"] ?? "",
+      busNumber: json["BusNumber"] ?? "",
+      lastName: json["LastName"] ?? "",
+      firstName: json["FirstName"] ?? "",
+      startRoutePoint: json["startRoutepoint"] ?? "",
+      endRoutePoint: json["endRoutepoint"] ?? "",
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "TripID": tripID,

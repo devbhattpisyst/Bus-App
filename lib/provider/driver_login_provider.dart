@@ -9,7 +9,6 @@ class DriverLoginProvider extends GetConnect {
   Future<DriverLoginResponseModel?> login(jsonArray) async {
     try {
       print(jsonArray);
-
       Response response = await post(
           "${Constants.baseUrl}Bus/loginDriver", jsonEncode(jsonArray),
           headers: <String, String>{

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bus/controller/passenger_controllers/ComeIn.dart';
 import 'package:bus/controller/passenger_controllers/dashboard_controller.dart';
@@ -15,6 +16,16 @@ class Dashboard extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
+    var trip = controller.trips;
+    // List<String> filteredList = [];
+    // String terminal1 = "";
+    // String terminal2 = "";
+    // List<TripData> filteredTrips = [];
+
+    // void filterTrips() {
+    //   filteredList.addAll();
+    // }
+
     Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
@@ -62,275 +73,296 @@ class Dashboard extends GetView<DashboardController> {
                         ),
                       ),
                       Expanded(
-                        child: SizedBox(
-                          width: size.width,
-                          child: TabBarView(
-                              controller: controller.tabController,
-                              children: [
-                                BusStopList(),
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: size.width,
-                                      padding: EdgeInsets.all(10),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer
-                                          .withOpacity(.1),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 8,
-                                                    horizontal:
-                                                        size.width * .07),
-                                                child: Text(
-                                                  "Search",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleMedium,
-                                                ),
+                          child: SizedBox(
+                        width: size.width,
+                        child: TabBarView(
+                            controller: controller.tabController,
+                            children: [
+                              BusStopList(),
+                              Column(
+                                children: [
+                                  Container(
+                                    width: size.width,
+                                    padding: EdgeInsets.all(10),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer
+                                        .withOpacity(.1),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8,
+                                                  horizontal: size.width * .07),
+                                              child: Text(
+                                                "Search",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium,
                                               ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              SizedBox(
-                                                width: size.width * .35,
-                                                child: TextFormField(
-                                                  // controller: controller.emailEditingController,
-                                                  style: TextStyle(
-                                                    // color: CustomTheme.white,
-                                                    fontSize: size.height * .02,
-                                                    fontWeight: FontWeight.w500,
-                                                    letterSpacing:
-                                                        size.height * .001,
-                                                  ),
-                                                  // onChanged: controller.emailChanged,
-                                                  keyboardType: TextInputType
-                                                      .emailAddress,
-                                                  decoration: InputDecoration(
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                size.height *
-                                                                    .01,
-                                                            vertical:
-                                                                size.height *
-                                                                    .01),
-                                                    hintText: "terminal 1",
-                                                    hintStyle: TextStyle(
-                                                        fontSize:
-                                                            size.height * .02,
-                                                        color: Colors
-                                                            .grey.shade500),
-                                                    // filled: true,
-
-                                                    // errorText: controller.emailError.value.isEmpty ? null : controller.emailError.value,
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.redAccent,
-                                                        width:
-                                                            size.height * .002,
-                                                      ),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.redAccent,
-                                                        width:
-                                                            size.height * .002,
-                                                      ),
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                      width: 1,
-                                                    )),
-
-                                                    // OutlineInputBorder(
-
-                                                    // borderSide: BorderSide(
-                                                    //   color: CustomTheme.inputBorder,
-                                                    //   width: size.height * .002,
-                                                    // ),
-                                                    // ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                      width: 1,
-                                                    )),
-                                                  ),
-                                                ),
-                                              ),
-                                              Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              SizedBox(
-                                                width: size.width * .35,
-                                                child: TextFormField(
-                                                  // controller: controller.emailEditingController,
-                                                  style: TextStyle(
-                                                    // color: CustomTheme.white,
-                                                    fontSize: size.height * .02,
-                                                    fontWeight: FontWeight.w500,
-                                                    letterSpacing:
-                                                        size.height * .001,
-                                                  ),
-                                                  // onChanged: controller.emailChanged,
-                                                  keyboardType: TextInputType
-                                                      .emailAddress,
-                                                  decoration: InputDecoration(
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                size.height *
-                                                                    .01,
-                                                            vertical:
-                                                                size.height *
-                                                                    .01),
-                                                    hintText: "terminal 2",
-                                                    hintStyle: TextStyle(
-                                                        fontSize:
-                                                            size.height * .02,
-                                                        color: Colors
-                                                            .grey.shade500),
-                                                    // filled: true,
-
-                                                    // errorText: controller.emailError.value.isEmpty ? null : controller.emailError.value,
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.redAccent,
-                                                        width:
-                                                            size.height * .002,
-                                                      ),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Colors.redAccent,
-                                                        width:
-                                                            size.height * .002,
-                                                      ),
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                      width: 1,
-                                                    )),
-
-                                                    // OutlineInputBorder(
-
-                                                    // borderSide: BorderSide(
-                                                    //   color: CustomTheme.inputBorder,
-                                                    //   width: size.height * .002,
-                                                    // ),
-                                                    // ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                      width: 3,
-                                                    )),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: ListView.builder(
-                                        itemCount: controller.trips.length,
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 10,
-                                              horizontal: 10,
                                             ),
-                                            child: Card(
-                                              child: ListTile(
-                                                onTap: () {
-                                                  // controller.lauchgoogleMaps("18.516726", "73.856255");
-                                                  Get.toNamed("/ViewBusDetails",
-                                                      arguments: [
-                                                        controller.trips[index]
-                                                      ]);
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            SizedBox(
+                                              width: size.width * .35,
+                                              child: TextFormField(
+                                                // controller: controller.emailEditingController,
+                                                style: TextStyle(
+                                                  // color: CustomTheme.white,
+                                                  fontSize: size.height * .02,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing:
+                                                      size.height * .001,
+                                                ),
+                                                onChanged: (value) {
+                                                  log("terminal-1: " +
+                                                      value.toString());
+
+                                                  controller.terminal1 =
+                                                      value.toString();
+
+                                                  controller
+                                                      .SearchStartRoutePoint();
                                                 },
-                                                leading:
-                                                    const Icon(Icons.bus_alert),
-                                                title: Text(
-                                                    "${controller.trips[index].startRoutePoint} -> ${controller.trips[index].endRoutePoint}"),
-                                                subtitle: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    // Row(
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              size.height * .01,
+                                                          vertical:
+                                                              size.height *
+                                                                  .01),
+                                                  hintText: "terminal 1",
+                                                  hintStyle: TextStyle(
+                                                      fontSize:
+                                                          size.height * .02,
+                                                      color:
+                                                          Colors.grey.shade500),
+                                                  // filled: true,
 
-                                                    //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                    //   children: [
-                                                    //     Text(
-                                                    //         "bus no: ${controller.trips[index].busNumber}"),
-                                                    //     const Spacer(),
-                                                    //     Text(
-                                                    //         "Route no: ${controller.trips[index].routeID}"),
-                                                    //     const Spacer(),
-                                                    //   ],
-                                                    // ),
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                              "bus no: ${controller.trips[index].busNumber}"),
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                              "Route no: ${controller.trips[index].routeID}"),
-                                                        ),
-                                                      ],
+                                                  // errorText: controller.emailError.value.isEmpty ? null : controller.emailError.value,
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.redAccent,
+                                                      width: size.height * .002,
                                                     ),
-                                                  ],
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.redAccent,
+                                                      width: size.height * .002,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                    width: 1,
+                                                  )),
+
+                                                  // OutlineInputBorder(
+
+                                                  // borderSide: BorderSide(
+                                                  //   color: CustomTheme.inputBorder,
+                                                  //   width: size.height * .002,
+                                                  // ),
+                                                  // ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                    width: 1,
+                                                  )),
                                                 ),
-                                                trailing: Chip(
-                                                    label: Text(
-                                                        controller.status(
-                                                            int.parse(controller
-                                                                .trips[index]
-                                                                .status)))),
-                                                dense: true,
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ]),
-                        ),
-                      )
+                                            Icon(
+                                                Icons.arrow_right_alt_outlined),
+                                            SizedBox(
+                                              width: size.width * .35,
+                                              child: TextFormField(
+                                                // controller: controller.emailEditingController,
+                                                style: TextStyle(
+                                                  // color: CustomTheme.white,
+                                                  fontSize: size.height * .02,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing:
+                                                      size.height * .001,
+                                                ),
+                                                onChanged: (value) {
+                                                  log("terminal-2: " +
+                                                      value.toString());
+                                                  controller.terminal2 =
+                                                      value.toString();
+
+                                                  controller
+                                                      .SearchEndRoutePoint();
+                                                },
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              size.height * .01,
+                                                          vertical:
+                                                              size.height *
+                                                                  .01),
+                                                  hintText: "terminal 2",
+                                                  hintStyle: TextStyle(
+                                                      fontSize:
+                                                          size.height * .02,
+                                                      color:
+                                                          Colors.grey.shade500),
+                                                  // filled: true,
+
+                                                  // errorText: controller.emailError.value.isEmpty ? null : controller.emailError.value,
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.redAccent,
+                                                      width: size.height * .002,
+                                                    ),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.redAccent,
+                                                      width: size.height * .002,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                    width: 1,
+                                                  )),
+
+                                                  // OutlineInputBorder(
+
+                                                  // borderSide: BorderSide(
+                                                  //   color: CustomTheme.inputBorder,
+                                                  //   width: size.height * .002,
+                                                  // ),
+                                                  // ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                    width: 3,
+                                                  )),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: controller.filteredTrips.isEmpty
+                                        ? Center(child: Text('No results'))
+                                        : ListView.builder(
+                                            itemCount:
+                                                controller.filteredTrips.length,
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) {
+                                              return Obx(
+                                                () => Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 10,
+                                                  ),
+                                                  child: Card(
+                                                    child: ListTile(
+                                                      onTap: () {
+                                                        // controller.lauchgoogleMaps("18.516726", "73.856255");
+                                                        Get.toNamed(
+                                                            "/ViewBusDetails",
+                                                            arguments: [
+                                                              controller
+                                                                      .filteredTrips[
+                                                                  index]
+                                                            ]);
+                                                      },
+                                                      leading: const Icon(
+                                                          Icons.bus_alert),
+                                                      title: Text(
+                                                          "${controller.filteredTrips[index].startRoutePoint} -> ${controller.filteredTrips[index].endRoutePoint}"),
+                                                      subtitle: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // Row(
+
+                                                          //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                          //   children: [
+                                                          //     Text(
+                                                          //         "bus no: ${controller.trips[index].busNumber}"),
+                                                          //     const Spacer(),
+                                                          //     Text(
+                                                          //         "Route no: ${controller.trips[index].routeID}"),
+                                                          //     const Spacer(),
+                                                          //   ],
+                                                          // ),
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Text(
+                                                                    "bus no: ${controller.filteredTrips[index].busNumber}"),
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                    "Route no: ${controller.filteredTrips[index].routeID}"),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      trailing: Chip(
+                                                          label: Text(controller
+                                                              .status(int.parse(
+                                                                  controller
+                                                                      .filteredTrips[
+                                                                          index]
+                                                                      .status)))),
+                                                      dense: true,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                  )
+                                ],
+                              )
+                            ]),
+                      ))
                     ],
                   ),
                 )
@@ -355,8 +387,10 @@ class Dashboard extends GetView<DashboardController> {
             child: Card(
               child: ListTile(
                 onTap: () async {
-                  await controller.getstopsdetails();
-                  // var busstop = TripData.fromJson({}).busID;
+                  log("this  is index number ${index}");
+                  await controller.getstopsdetails(
+                      controller.busStopsSorted[index].busStopID);
+                  var busstop = TripData.fromJson({}).busID;
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ComeInDashboard()),
