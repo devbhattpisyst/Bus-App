@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'dart:ui';
-
 import 'package:bus/controller/driver_controllers/driver_signup_controller.dart';
 import 'package:bus/view/driver/auth/driver_login.dart';
 import 'package:flutter/material.dart';
@@ -230,8 +230,8 @@ class DriverSignUp extends GetView<DriverSignUpController> {
                                   // cursorColor: CustomTheme.white,
                                   // cursorHeight: size.height * .025,
                                   // onChanged: controller.passwordChanged,
-                                  controller: DriverSignUpController()
-                                      .passwordEditingController,
+                                  controller: Get.put(DriverSignUpController()
+                                      .passwordEditingController),
                                   obscureText: data.value,
                                   validator: (value) => value == ""
                                       ? "Please Enter Password"
@@ -303,6 +303,93 @@ class DriverSignUp extends GetView<DriverSignUpController> {
                                 ),
                             true.obs),
                       ),
+                      // Center(
+                      //   child: ObxValue(
+                      //       (data) => TextFormField(
+                      //             style: TextStyle(
+                      //               // color: CustomTheme.white,
+                      //               fontSize: size.height * 0.02,
+                      //               fontWeight: FontWeight.w500,
+                      //               letterSpacing: size.height * .002,
+                      //             ),
+                      //             showCursor: true,
+                      //             // cursorColor: CustomTheme.white,
+                      //             // cursorHeight: size.height * .025,
+                      //             // onChanged: controller.passwordChanged,
+                      //             controller: DriverSignUpController()
+                      //                 .passwordEditingController,
+                      //             obscureText: data.value,
+                      //             validator: (value) => value == ""
+                      //                 ? "Please Enter Password"
+                      //                 : null,
+                      //             decoration: InputDecoration(
+                      //               // hintText: "fanbuku@gmail.com",
+                      //               contentPadding: EdgeInsets.symmetric(
+                      //                   horizontal: size.height * 0.01,
+                      //                   vertical: size.height * 0.01),
+                      //               hintText: "Password",
+                      //               hintStyle: TextStyle(
+                      //                   fontSize: size.height * .02,
+                      //                   color: Colors.grey.shade500),
+
+                      //               border: InputBorder.none,
+                      //               // filled: true,
+                      //               // fillColor: CustomTheme.bgGrey,
+                      //               // errorText:
+                      //               //     controller.passwordError.value.isEmpty ? null : controller.passwordError.value,
+                      //               errorBorder: OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                   color: Colors.redAccent,
+                      //                   width: size.height * .002,
+                      //                 ),
+                      //               ),
+                      //               focusedErrorBorder: OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                   color: Colors.redAccent,
+                      //                   width: size.height * .002,
+                      //                 ),
+                      //               ),
+                      //               enabledBorder: OutlineInputBorder(
+                      //                   borderSide: BorderSide(
+                      //                       color: Theme.of(context)
+                      //                           .colorScheme
+                      //                           .primary)),
+                      //               focusedBorder: OutlineInputBorder(
+                      //                   borderSide: BorderSide(
+                      //                       color: Theme.of(context)
+                      //                           .colorScheme
+                      //                           .primary)),
+                      //               suffixIcon: Obx(() => GestureDetector(
+                      //                     onTap: () {
+                      //                       log("Eyes Icon Clicked");
+                      //                       data.value = !data.value;
+                      //                     },
+                      //                     child: Container(
+                      //                         decoration: BoxDecoration(
+                      //                             color: Theme.of(context)
+                      //                                 .colorScheme
+                      //                                 .primaryContainer
+                      //                                 .withOpacity(.3),
+                      //                             borderRadius:
+                      //                                 BorderRadius.only(
+                      //                               topRight: Radius.circular(
+                      //                                   size.height * 0.01),
+                      //                               bottomRight:
+                      //                                   Radius.circular(
+                      //                                       size.height * 0.01),
+                      //                             )),
+                      //                         child: Icon(
+                      //                           data.value
+                      //                               ? Icons.visibility_off
+                      //                               : Icons.visibility,
+                      //                           // color: CustomTheme.white,
+                      //                           size: size.height * .03,
+                      //                         )),
+                      //                   )),
+                      //             ),
+                      //           ),
+                      //       true.obs),
+                      // ),
                       SizedBox(
                         height: size.height * .02,
                       ),

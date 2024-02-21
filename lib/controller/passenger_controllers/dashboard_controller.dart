@@ -30,12 +30,12 @@ class DashboardController extends GetxController
   String terminal1 = "";
   String terminal2 = "";
   List<dynamic> filteredList = [];
-
+  var busstop = 0;
   @override
   void onInit() async {
     super.onInit();
     Position? loc = await determinePosition();
-
+    busstop = 17;
     latitude = loc?.latitude;
     longitude = loc?.longitude;
     tabController =
@@ -72,7 +72,7 @@ class DashboardController extends GetxController
     // log("calling");
     try {
       var value = await BusStopsDetailsProvider()
-          .getBusStopDetails({"busstop": busstopid});
+          .getBusStopDetails({"busstop": busstop});
       if (value != null) {
         busstoparray.value = value.payload.data;
         log("hello we are bus stop details  => " + value.toString());
