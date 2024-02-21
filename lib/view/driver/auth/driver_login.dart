@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:bus/controller/driver_controllers/driver_login_controller.dart';
 import 'package:bus/view/driver/auth/DriverSignup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DriverLogin extends GetView<DriverLoginController> {
-  var currentTripIndex = 0;
   DriverLogin({super.key});
 
   @override
@@ -60,7 +57,7 @@ class DriverLogin extends GetView<DriverLoginController> {
                     // height: size.height * .06,
                     // width: size.width * .9,
                     child: TextFormField(
-                      controller: controller.emailEditingController,
+                      controller: controller.EmailEditingController,
                       style: TextStyle(
                         // color: CustomTheme.white,
                         fontSize: size.height * .02,
@@ -133,7 +130,7 @@ class DriverLogin extends GetView<DriverLoginController> {
                       // width: size.width * .9,
                       child: ObxValue(
                           (data) => TextFormField(
-                                controller: controller.passEditingController,
+                                controller: controller.PassEditingController,
                                 style: TextStyle(
                                   // color: CustomTheme.white,
                                   fontSize: size.height * .02,
@@ -146,7 +143,7 @@ class DriverLogin extends GetView<DriverLoginController> {
                                     ? "Please Enter Password"
                                     : null,
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: EdgeInsets.symmetric(  
                                       horizontal: size.height * .01,
                                       vertical: size.height * .01),
                                   hintText: "Bus@123",
@@ -233,7 +230,7 @@ class DriverLogin extends GetView<DriverLoginController> {
                                       visible.value = true;
                                     },
                                     style: ElevatedButton.styleFrom(
-                                        shape: BeveledRectangleBorder()),
+                                        shape: const BeveledRectangleBorder()),
                                     child: Text(
                                       // log("hits log in ${controller.driverTripdetails[currentTripIndex]}"),
                                       "LOGIN",
@@ -272,7 +269,7 @@ class DriverLogin extends GetView<DriverLoginController> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DriverSignUp()),
+                                  builder: (context) => const DriverSignUp()),
                             );
                           },
                           style: ElevatedButton.styleFrom(

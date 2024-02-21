@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:bus/models/passenger/all_bus_stops_model.dart';
-import 'package:bus/models/passenger/passenger_login_model.dart';
 import 'package:bus/models/passenger/passenger_signup_model.dart';
 import 'package:bus/utils/constants.dart';
 import 'package:get/get.dart';

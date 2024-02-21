@@ -5,9 +5,8 @@ import 'package:bus/utils/constants.dart';
 import 'package:get/get.dart';
 
 class DriverSignupProvider extends GetConnect {
-  Future<DriverSignupResponseModel?> Sign_Up(jsonArray) async {
+  Future<DriverSignupResponseModel?> signUp(jsonArray) async {
     try {
-      print(jsonArray);
       Response response = await post(
           "${Constants.baseUrl}Bus/registrationDriver", jsonEncode(jsonArray),
           headers: <String, String>{
@@ -15,14 +14,14 @@ class DriverSignupProvider extends GetConnect {
           });
 
       final body = json.decode(json.encode(response.body));
-      print("body \n" + body.toString());
+      print("body \n$body");
       if (response.statusCode == 200) {
         return driverSignupResponseFromJson(response.bodyString.toString());
       } else {
         return driverSignupResponseFromJson(response.bodyString.toString());
       }
     } catch (e) {
-      print("Object is " + e.toString());
+      print("Object is $e");
       Get.snackbar("Error", e.toString());
       return null;
     }

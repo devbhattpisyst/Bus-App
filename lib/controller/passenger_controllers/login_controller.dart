@@ -13,16 +13,15 @@ class PassengerLoginController extends GetxController {
 
   @override
   void onInit() async {
-    // TODO: implement onInit
-    // Position loc = await determinePosition();
-    // log("${loc.latitude} , ${loc.longitude}");
     super.onInit();
   }
 
   login() async {
     try {
-      await PassengerLoginProvider()
-          .login({"email": "${emailEditingController.text}", "password": "${passEditingController.text}"}).then(
+      await PassengerLoginProvider().login({
+        "email": "${emailEditingController.text}",
+        "password": "${passEditingController.text}"
+      }).then(
         (loginvalue) async {
           print(loginvalue);
           if (loginvalue != null) {

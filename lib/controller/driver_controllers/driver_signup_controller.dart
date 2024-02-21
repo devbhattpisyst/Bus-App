@@ -12,17 +12,20 @@ class DriverSignUpController extends GetxController {
   TextEditingController firstnameEditingController = TextEditingController();
   TextEditingController middlenameEditingController = TextEditingController();
   TextEditingController lastnameEditingController = TextEditingController();
-
+  TextEditingController phoneNumberEditingController = TextEditingController();
   SignUp() async {
     try {
-      await DriverSignupProvider().Sign_Up({
+      await DriverSignupProvider().signUp({
         "firstname": firstnameEditingController.text,
         "middlename": middlenameEditingController.text,
         "lastname": lastnameEditingController.text,
         "password": passwordEditingController.text,
-        "email": emailEditingController.text
+        "email": emailEditingController.text,
+        "mobile": phoneNumberEditingController.text,
       }).then((signupentity) async {
-        log("This is sign up entity of driver log in.${signupentity}");
+        log("This is sign up entity of driver log in.$signupentity");
+        // log(firstnameEditingController.text);
+        // log(middlenameEditingController.text);
         if (signupentity != null) {
           if (signupentity.success == true) {
             Get.snackbar("Success", signupentity.payload.message);
@@ -35,7 +38,7 @@ class DriverSignUpController extends GetxController {
         }
       });
     } catch (e) {
-      print("Exception \n" + e.toString());
+      print("Exception \n$e");
     }
   }
 }

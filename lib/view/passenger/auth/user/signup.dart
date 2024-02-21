@@ -1,4 +1,3 @@
-import 'package:bus/controller/passenger_controllers/login_controller.dart';
 import 'package:bus/controller/passenger_controllers/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -373,6 +372,5 @@ class SignUp extends GetView<PassengerSignupController> {
         ),
       ),
     );
-    ;
   }
 }
