@@ -1,4 +1,5 @@
 import 'package:bus/controller/driver_controllers/driver_dash_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,26 @@ class DriverDashboard extends GetView<DriverDashController> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    bool isNoTripAssigned = controller.driverTripdetails.isEmpty;
+
+    if (isNoTripAssigned == true) {
+      // Schedule the navigation to happen after the build process is complete
+      // Future.delayed(Duration.zero, () {
+      //   Get.to(NoTripsAssignedPage());
+      // });
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.primaryContainer,
+          title: Text(
+            "Drive a Bus",
+          ),
+        ),
+        body: Center(
+          child: Text('No Trips assigned yet'),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -262,3 +283,4 @@ class DriverDashboard extends GetView<DriverDashController> {
         });
   }
 }
+// }

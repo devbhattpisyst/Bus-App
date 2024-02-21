@@ -11,10 +11,11 @@ class PassengerSignupProvider extends GetConnect {
     try {
       print(jsonArray);
 
-      Response response =
-          await post("${Constants.baseUrl}Bus/registrationUser", jsonEncode(jsonArray), headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      });
+      Response response = await post(
+          "${Constants.baseUrl}Bus/registrationUser", jsonEncode(jsonArray),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
       final body = json.decode(json.encode(response.body));
 
       print("body \n" + body.toString());

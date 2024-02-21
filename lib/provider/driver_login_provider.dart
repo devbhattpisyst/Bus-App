@@ -6,7 +6,7 @@ import 'package:bus/utils/constants.dart';
 import 'package:get/get.dart';
 
 class DriverLoginProvider extends GetConnect {
-  Future<DriverLoginResponseModel?> login(jsonArray) async {
+  Future<DriverLoginResponseModel?> loginAsDriver(jsonArray) async {
     try {
       print(jsonArray);
       Response response = await post(

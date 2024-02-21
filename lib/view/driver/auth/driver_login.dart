@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:bus/controller/driver_controllers/driver_login_controller.dart';
+import 'package:bus/view/driver/auth/DriverSignup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DriverLogin extends GetView<DriverLoginController> {
-  const DriverLogin({super.key});
+  var currentTripIndex = 0;
+  DriverLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -225,12 +229,13 @@ class DriverLogin extends GetView<DriverLoginController> {
                                       // FocusManager.instance.primaryFocus
                                       //     ?.unfocus();
                                       visible.value = false;
-                                      controller.login();
+                                      controller.loginAsDriver();
                                       visible.value = true;
                                     },
                                     style: ElevatedButton.styleFrom(
                                         shape: BeveledRectangleBorder()),
                                     child: Text(
+                                      // log("hits log in ${controller.driverTripdetails[currentTripIndex]}"),
                                       "LOGIN",
                                       style: TextStyle(
                                           fontSize: size.height * .02),
@@ -264,7 +269,11 @@ class DriverLogin extends GetView<DriverLoginController> {
                         width: size.width * .35,
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.toNamed("/SignUp");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DriverSignUp()),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             // backgroundColor: CustomTheme.bgGrey,

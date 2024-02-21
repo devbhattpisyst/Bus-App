@@ -14,22 +14,27 @@ class DriverLoginController extends GetxController {
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passEditingController = TextEditingController();
 
-  var driverTripdetails = <DriverData>[];
+  void onInit() {
+    super.onInit();
+  }
 
-  login() async {
+  var driverTripdetails = <DriverData>[];
+  // var data = Get.arguments[0]['data'];
+
+  loginAsDriver() async {
     try {
-      await DriverLoginProvider().login({
+      await DriverLoginProvider().loginAsDriver({
         "email": emailEditingController.text,
         "password": passEditingController.text,
       }).then(
         (loginvalue) async {
-          log("hiiyeeee");
-          print(loginvalue);
+          print("The login value  is...." + loginvalue.toString());
           if (loginvalue != null) {
             if (loginvalue.success == true) {
               Get.snackbar("Success", loginvalue.payload.message);
               driverTripdetails = loginvalue.payload.data;
-              log("driver Trip details \n" + driverTripdetails.toString());
+              log("This is our data feild");
+              // log("driver Trip details \n" + driverTripdetails.toList().toString());
               Get.offAndToNamed("/DriverDashboard", arguments: [
                 {'data': driverTripdetails}
               ]);
