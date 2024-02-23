@@ -13,8 +13,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DriverDashController extends GetxController {
   TextEditingController descController = TextEditingController();
-  var driverTripdetails = <DriverData>[];
-  var activeTripDetails = <DriverData>[];
+  var driverTripdetails = <DriverData>[].obs;
+  var activeTripDetails = <DriverData>[].obs;
+  late RxBool tripStarted;
+  late RxBool tripReached;
+  late RxBool sosOccured;
+
   // var driverTripStatusData = <Driver>[];
   var currentTripindex = 0;
   late Timer timer;
@@ -22,8 +26,11 @@ class DriverDashController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    driverTripdetails = List.from(Get.arguments[0]['data']);
-    // activeTripDetails = List.from(Get.arguments[0]['data']);
+    driverTripdetails = RxList<DriverData>.from(Get.arguments[0]['data']);
+    activeTripDetails = RxList<DriverData>.from(Get.arguments[0]['data']);
+    tripStarted = false.obs;
+    tripReached = false.obs;
+    sosOccured = false.obs;
     print("Trip details\n" + driverTripdetails.toString());
     super.onInit();
   }
@@ -32,7 +39,7 @@ class DriverDashController extends GetxController {
     // driverTripdetails.clear();
     await ActivatedTrips();
     // Update driverTripdetails with the updated data from activeTripDetails
-    driverTripdetails = List.from(activeTripDetails);
+    driverTripdetails.value = activeTripDetails.toList();
   }
 
   Future<void> lauchgoogleMaps(lat, long) async {
@@ -60,9 +67,9 @@ class DriverDashController extends GetxController {
       if (value != null) {
         // driverTripdetails = value.payload.data;
         // driverTripdetails.clear();
-        activeTripDetails = List.from(value.payload.data);
+        activeTripDetails.value = value.payload.data;
         // log("This is active trips :  ${activeTripDetails}");
-        driverTripdetails = List.from(activeTripDetails);
+        driverTripdetails.value = activeTripDetails.toList();
       }
     });
     log("response getting from the activated trips");
