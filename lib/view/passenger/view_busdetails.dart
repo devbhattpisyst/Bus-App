@@ -1,7 +1,10 @@
 import 'package:bus/controller/driver_controllers/driver_dash_controller.dart';
+import 'package:bus/controller/passenger_controllers/dashboard_controller.dart';
+import 'package:bus/view/passenger/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewBusDetails extends GetView<DriverDashController> {
   const ViewBusDetails({super.key});
@@ -61,7 +64,7 @@ class ViewBusDetails extends GetView<DriverDashController> {
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
-                                "Route no : ${Get.arguments?[0]?.routeID ?? ""}",
+                                "Route no : ${Get.arguments?[0]?.routeId ?? ""}",
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ],
@@ -73,12 +76,12 @@ class ViewBusDetails extends GetView<DriverDashController> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "${Get.arguments[0].startRoutePoint}",
+                                "${Get.arguments[0].startRoutepoint}",
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Icon(Icons.arrow_right_alt_outlined),
                               Text(
-                                "${Get.arguments[0].endRoutePoint}",
+                                "${Get.arguments[0].endRoutepoint}",
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ],
@@ -112,8 +115,13 @@ class ViewBusDetails extends GetView<DriverDashController> {
                           elevation: 5,
                           child: ListTile(
                             onTap: () {
-                              controller.lauchgoogleMaps(
-                                  "18.516726", "73.856255");
+                              // controller.lauchgoogleMaps(
+                              //     "18.516726", "73.856255");
+                              var lat = "18.516726";
+                              var long = "73.856255";
+                              final url = Uri.parse(
+                                  'https://www.google.com/maps/search/?api=1&query=$lat,$long');
+                              launchUrl(url);
                             },
                             leading: const Icon(Icons.paragliding_outlined),
                             title: const Text("Gadital bus stop"),

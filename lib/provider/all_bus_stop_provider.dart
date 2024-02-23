@@ -54,9 +54,43 @@ class BusStopProvider extends GetConnect {
     }
   }
 
-  Future<TripsModel?> getstopsdetails(jsonArray) async {
+  Future<TripsModel?> get_Sub_Routes(jsonArray) async {
+    log("This is json Array" + jsonArray.toString());
+
     try {
-      log("This is json Array " + jsonArray.toString());
+      Response response = await post(
+        "${Constants.baseUrl}Bus/getTripBySubRoutes",
+        jsonEncode(jsonArray),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      var responseBody = response.bodyString.toString();
+
+      log("This is response body : " + responseBody);
+      log("Response status code: " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        var parsedResponse = json.decode(responseBody);
+        if (parsedResponse['success'] == true) {
+          log("Success mili hai...");
+          return tripsModelFromJson(responseBody);
+        } else {
+          return null;
+        }
+      } else {
+        log("Request failed with status: " + response.statusCode.toString());
+      }
+    } catch (e) {
+      print("object" + e.toString());
+      Get.snackbar("Error", e.toString());
+      return null;
+    }
+  }
+
+  Future<TripsModel?> getstopsdetails(jsonArray) async {
+    log("This is json Array " + jsonArray.toString());
+    try {
       Response response = await post(
           "${Constants.baseUrl}Bus/getTripByStop", jsonEncode(jsonArray),
           headers: <String, String>{
@@ -71,39 +105,15 @@ class BusStopProvider extends GetConnect {
         if (parsedResponse['success'] == true) {
           return tripsModelFromJson(responseBody);
         } else {
-          return Future.error(parsedResponse['error']['message']);
+          return null;
         }
       }
     } catch (e) {
       Get.snackbar("Error", e.toString());
-      print(e.toString());
+      log("Exception => ${e}  ");
       return null;
     }
   }
-
-  // Future<TripsModel?> getstopsdetails(jsonArray) async {
-  //   print("This is our json array " + jsonEncode(jsonArray));
-  //   try {
-  //     Response response = await post(
-  //         "${Constants.baseUrl}Bus/getTripByStop", jsonEncode(jsonArray),
-  //         headers: <String, String>{
-  //           'Content-Type': 'application/json; charset=UTF-8',
-  //         });
-  //     var responseBody = response.body.toString();
-  //     log("Response body is : " + responseBody.toString());
-  //     if (response.statusCode == 200) {
-  //       var parsedResponse = json.decode(responseBody);
-  //       if (parsedResponse['success'] == true) {
-  //         return tripsModelFromJson(responseBody);
-  //       } else {
-  //         return Future.error(parsedResponse['error']['message']);
-  //       }
-  //     } else {}
-  //   } catch (e) {
-  //     Get.snackbar("Error ", e.toString());
-  //     print(e.toString());
-  //   }
-  // }
 
   Future<AllTripsResponseModel?> getTrips() async {
     try {

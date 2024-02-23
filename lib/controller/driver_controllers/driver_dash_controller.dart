@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:bus/geo/locator.dart';
 import 'package:bus/models/driver/driver_login_model.dart';
 import 'package:bus/models/passenger/all_trips_model.dart';
@@ -26,7 +27,9 @@ class DriverDashController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
+
     driverTripdetails = RxList<DriverData>.from(Get.arguments[0]['data']);
+
     activeTripDetails = RxList<DriverData>.from(Get.arguments[0]['data']);
     tripStarted = false.obs;
     tripReached = false.obs;
@@ -60,16 +63,20 @@ class DriverDashController extends GetxController {
     });
   }
 
+// bus number = 6789 , trip number = 24 , hadapasar --> swargate.
   ActivatedTrips() {
     log("Calling this function Activated Trips");
 
-    DriverTripProvider().ActiveBusTrips({"DriverID": "30"}).then((value) {
+    DriverTripProvider().ActiveBusTrips({
+      "DriverID": driverTripdetails[currentTripindex].driverID.toString()
+    }).then((value) {
+      log("The bus id is : " + driverTripdetails[currentTripindex].busId);
       if (value != null) {
         // driverTripdetails = value.payload.data;
         // driverTripdetails.clear();
         activeTripDetails.value = value.payload.data;
         // log("This is active trips :  ${activeTripDetails}");
-        driverTripdetails.value = activeTripDetails.toList();
+        driverTripdetails.value = List.from(activeTripDetails.toList());
       }
     });
     log("response getting from the activated trips");

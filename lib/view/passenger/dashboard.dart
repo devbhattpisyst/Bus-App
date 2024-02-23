@@ -127,8 +127,8 @@ class Dashboard extends GetView<DashboardController> {
                                                   controller.terminal1 =
                                                       value.toString();
 
-                                                  controller
-                                                      .SearchStartRoutePoint();
+                                                  // controller
+                                                  //     .SearchStartRoutePoint();
                                                 },
                                                 keyboardType:
                                                     TextInputType.emailAddress,
@@ -211,8 +211,8 @@ class Dashboard extends GetView<DashboardController> {
                                                   controller.terminal2 =
                                                       value.toString();
 
-                                                  controller
-                                                      .SearchEndRoutePoint();
+                                                  // controller
+                                                  //     .SearchEndRoutePoint();
                                                 },
                                                 keyboardType:
                                                     TextInputType.emailAddress,
@@ -276,8 +276,22 @@ class Dashboard extends GetView<DashboardController> {
                                                   )),
                                                 ),
                                               ),
-                                            )
+                                            ),
                                           ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: SizedBox(
+                                            width: 200,
+                                            height: 50,
+                                            child: ElevatedButton(
+                                              onPressed: () async {
+                                                controller.loading.value = true;
+                                                await controller.getSubRoutes();
+                                              },
+                                              child: Text('Search'),
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -312,7 +326,7 @@ class Dashboard extends GetView<DashboardController> {
                                                       leading: const Icon(
                                                           Icons.bus_alert),
                                                       title: Text(
-                                                          "${controller.filteredTrips[index].startRoutePoint} -> ${controller.filteredTrips[index].endRoutePoint}"),
+                                                          "${controller.filteredTrips[index].startRoutepoint} -> ${controller.filteredTrips[index].endRoutepoint}"),
                                                       subtitle: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -338,7 +352,7 @@ class Dashboard extends GetView<DashboardController> {
                                                               ),
                                                               Expanded(
                                                                 child: Text(
-                                                                    "Route no: ${controller.filteredTrips[index].routeID}"),
+                                                                    "Route no: ${controller.filteredTrips[index].routeId}"),
                                                               ),
                                                             ],
                                                           ),
@@ -387,21 +401,17 @@ class Dashboard extends GetView<DashboardController> {
             child: Card(
               child: ListTile(
                 onTap: () async {
-                  log("this  is index number ${index}");
-                  await controller.getstopsdetails(
-                      controller.busStopsSorted[index].busStopID);
+                  log("Calling index : ${index}");
                   log("Parameter passed is :${controller.busStopsSorted[index].busStopID}");
-                  var busstop = TripData.fromJson({}).busID;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ComeInDashboard()),
-                  );
+                  await controller.getStopDetails(
+                      controller.busStopsSorted[index].busStopID);
+                  Get.toNamed("/ComeIn");
                 },
                 leading: const Icon(Icons.bus_alert),
                 title: Text(controller.busStopsSorted[index].busStopName),
                 // subtitle: Text("view location"),
                 // dense: true,
-                trailing: const Chip(label: Text("view location")),
+                trailing: const Chip(label: Text("Trip Details")),
               ),
             ),
           );

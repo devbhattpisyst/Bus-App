@@ -18,24 +18,26 @@ class DashboardController extends GetxController
   late TabController tabController;
   // TabController(length: 2, vsync: this); // Initialize TabController here;
   var loading = true.obs;
+  bool emptyData = false;
   var busStopsSorted = <BusStop>[].obs;
 
   var busStops = <BusStop>[].obs;
   //var busStopsDetails = <Trip>[].obs;
-  var filteredTrips = [].obs;
+  var filteredTrips = <Trip>[].obs;
   var busstoparray = <Trip>[].obs;
   var trips = <TripData>[].obs;
   static var latitude;
   static var longitude;
   String terminal1 = "";
   String terminal2 = "";
-  List<dynamic> filteredList = [];
-  var busstop = 0;
+
+  var currentIndex = 0;
+
   @override
   void onInit() async {
     super.onInit();
     Position? loc = await determinePosition();
-    busstop = 17;
+
     latitude = loc?.latitude;
     longitude = loc?.longitude;
     tabController =
@@ -46,44 +48,66 @@ class DashboardController extends GetxController
     getTrips();
   }
 
-  SearchStartRoutePoint() {
-    filteredTrips.clear(); // Clear the previous results
-    log("calling....");
-    filteredTrips.addAll(trips.where((trip) {
-      return trip.startRoutePoint
-              .toLowerCase()
-              .contains(terminal1.toLowerCase()) &&
-          trip.endRoutePoint.toLowerCase().contains(terminal2.toLowerCase());
-    }).toList());
-  }
+  // SearchStartRoutePoint() {
+  //   filteredTrips.clear(); // Clear the previous results
+  //   log("calling....");
+  //   filteredTrips.addAll(trips.where((trip) {
+  //     return trip.startRoutePoint
+  //             .toLowerCase()
+  //             .contains(terminal1.toLowerCase()) &&
+  //         trip.endRoutePoint.toLowerCase().contains(terminal2.toLowerCase());
+  //   }).toList());
+  // }
 
-  SearchEndRoutePoint() {
-    filteredTrips.clear();
-    log("Calling....");
-    filteredTrips.addAll(trips.where((trip) {
-      return trip.endRoutePoint
-              .toLowerCase()
-              .contains(terminal2.toLowerCase()) &&
-          trip.startRoutePoint.toLowerCase().contains(terminal1.toLowerCase());
-    }).toList());
-  }
+  // SearchEndRoutePoint() {
+  //   filteredTrips.clear();
+  //   log("Calling....");
+  //   filteredTrips.addAll(trips.where((trip) {
+  //     return trip.endRoutePoint
+  //             .toLowerCase()
+  //             .contains(terminal2.toLowerCase()) &&
+  //         trip.startRoutePoint.toLowerCase().contains(terminal1.toLowerCase());
+  //   }).toList());
+  // }
 
-  getstopsdetails(busstopid) async {
-    busstopid = 17;
-    // log("calling");
-    try {
-      var value = await BusStopsDetailsProvider()
-          .getBusStopDetails({"busstop": busstopid});
-      if (value != null) {
-        busstoparray.value = value.payload.data;
-        log("hello we are bus stop details  => " + value.toString());
+  getStopDetails(busstop) async {
+    // loading.value = true; // Show loading indicator
+
+    await BusStopProvider().getstopsdetails({"busstop": busstop}).then((value) {
+      log("responce => ${jsonDecode(jsonEncode(value))}");
+      log("hie i am sid");
+      if (value != null && value.payload.data.isNotEmpty) {
+        busstoparray.addAll(List.from(value.payload.data));
+        log("list offf => ${value.payload.data}");
+      } else {
+        // Handle the case when the data is null or empty
+        log("Data is null or empty");
+        busstoparray.clear(); // Set an empty list to clear any existing data
+        emptyData = true;
       }
-    } catch (e) {
-      print("Error: $e");
-      Get.snackbar("Error", e.toString());
-    } finally {
-      loading.value = false;
-    }
+    }).catchError((error) {
+      // Handle any errors that occur during the API call
+      Get.snackbar("Error", error.toString());
+    }).whenComplete(() {
+      loading.value = false; // Hide loading indicator
+    });
+  }
+
+  getSubRoutes() async {
+    // loading.value = true;
+    log("The value of terminal 1 is : " + terminal1.toString());
+    log("The value of terminal 2 is : " + terminal2.toString());
+    log("Calling sub routes controllers...");
+    await BusStopProvider().get_Sub_Routes({
+      "start": terminal1.toString(),
+      "end": terminal2.toString()
+    }).then((value) {
+      log("Inside we go --> ${value}");
+      if (value != null) {
+        filteredTrips.value = value.payload.data.cast<Trip>();
+      }
+    });
+    loading.value = false;
   }
 
   // getstopsdetails() async {

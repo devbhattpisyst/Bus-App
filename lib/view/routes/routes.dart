@@ -4,6 +4,7 @@ import 'package:bus/binders/driver_login_binder.dart';
 import 'package:bus/binders/driver_signup_binder.dart';
 import 'package:bus/binders/login_binder.dart';
 import 'package:bus/binders/signup_binder.dart';
+import 'package:bus/controller/passenger_controllers/ComeIn.dart';
 import 'package:bus/view/driver/auth/DriverSignup.dart';
 import 'package:bus/view/driver/auth/driver_login.dart';
 import 'package:bus/view/driver/dashboard/driver_dashboard.dart';
@@ -49,4 +50,9 @@ var routes = [
     page: () => ViewBusDetails(),
     binding: DriverDashBinding(),
   ),
+  GetPage(
+    name: "/ComeIn",
+    page: () => ComeInDashboard(),
+    binding: DriverDashBinding(),
+  )
 ];
