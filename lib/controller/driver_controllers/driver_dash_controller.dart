@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:bus/geo/locator.dart';
 import 'package:bus/models/driver/driver_login_model.dart';
+import 'package:bus/models/passenger/all_trips_model.dart';
 import 'package:bus/provider/all_bus_stop_provider.dart';
 import 'package:bus/provider/driver_trip_provider.dart';
 import 'package:bus/view/driver/dashboard/driver_dashboard.dart';
@@ -13,15 +14,25 @@ import 'package:url_launcher/url_launcher.dart';
 class DriverDashController extends GetxController {
   TextEditingController descController = TextEditingController();
   var driverTripdetails = <DriverData>[];
+  var activeTripDetails = <DriverData>[];
+  // var driverTripStatusData = <Driver>[];
   var currentTripindex = 0;
   late Timer timer;
 
   @override
   void onInit() {
     // TODO: implement onInit
-    driverTripdetails = Get.arguments[0]['data'];
+    driverTripdetails = List.from(Get.arguments[0]['data']);
+    // activeTripDetails = List.from(Get.arguments[0]['data']);
     print("Trip details\n" + driverTripdetails.toString());
     super.onInit();
+  }
+
+  Future<void> refreshData() async {
+    // driverTripdetails.clear();
+    await ActivatedTrips();
+    // Update driverTripdetails with the updated data from activeTripDetails
+    driverTripdetails = List.from(activeTripDetails);
   }
 
   Future<void> lauchgoogleMaps(lat, long) async {
@@ -40,6 +51,24 @@ class DriverDashController extends GetxController {
         startRunner();
       }
     });
+  }
+
+  ActivatedTrips() {
+    log("Calling this function Activated Trips");
+
+    DriverTripProvider().ActiveBusTrips({"DriverID": "30"}).then((value) {
+      if (value != null) {
+        // driverTripdetails = value.payload.data;
+        // driverTripdetails.clear();
+        activeTripDetails = List.from(value.payload.data);
+        // log("This is active trips :  ${activeTripDetails}");
+        driverTripdetails = List.from(activeTripDetails);
+      }
+    });
+    log("response getting from the activated trips");
+    // for(var x in driverTripdetails){
+    //   lo
+    // }
   }
 
   startRunner() async {

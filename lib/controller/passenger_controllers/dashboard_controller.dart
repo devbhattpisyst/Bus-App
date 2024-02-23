@@ -69,10 +69,11 @@ class DashboardController extends GetxController
   }
 
   getstopsdetails(busstopid) async {
+    busstopid = 17;
     // log("calling");
     try {
       var value = await BusStopsDetailsProvider()
-          .getBusStopDetails({"busstop": busstop});
+          .getBusStopDetails({"busstop": busstopid});
       if (value != null) {
         busstoparray.value = value.payload.data;
         log("hello we are bus stop details  => " + value.toString());

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bus/models/driver/driver_login_model.dart';
+import 'package:bus/models/driver/driver_signup_model.dart';
 import 'package:bus/utils/constants.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
@@ -32,6 +34,35 @@ class DriverTripProvider extends GetConnect {
       );
       Get.snackbar("Error", e.toString());
       return null;
+    }
+  }
+
+  Future<DriverLoginResponseModel?> ActiveBusTrips(jsonArray) async {
+    print(jsonArray);
+    try {
+      Response response = await post(
+          "${Constants.baseUrl}Bus/ActiveTrip", jsonEncode(jsonArray),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      var responseBody = response.bodyString.toString();
+
+      log(responseBody.toString());
+
+      if (response.statusCode == 200) {
+        var parsedResponse = json.decode(responseBody);
+        if (parsedResponse['success'] == true) {
+          return driverLoginResponseModelFromJson(responseBody);
+        } else {
+          return Future.error(parsedResponse['error']['message']);
+        }
+      }
+    } catch (e) {
+      print(
+        "object" + e.toString(),
+      );
+      Get.snackbar("Error", e.toString());
+      return Future.error("Error" + e.toString());
     }
   }
 

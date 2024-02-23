@@ -390,6 +390,7 @@ class Dashboard extends GetView<DashboardController> {
                   log("this  is index number ${index}");
                   await controller.getstopsdetails(
                       controller.busStopsSorted[index].busStopID);
+                  log("Parameter passed is :${controller.busStopsSorted[index].busStopID}");
                   var busstop = TripData.fromJson({}).busID;
                   Navigator.push(
                     context,
