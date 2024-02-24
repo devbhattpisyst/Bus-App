@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bus/controller/driver_controllers/driver_dash_controller.dart';
 import 'package:bus/controller/passenger_controllers/ComeIn.dart';
 import 'package:bus/controller/passenger_controllers/dashboard_controller.dart';
 import 'package:bus/models/passenger/all_trips_model.dart';
@@ -314,14 +315,52 @@ class Dashboard extends GetView<DashboardController> {
                                                   child: Card(
                                                     child: ListTile(
                                                       onTap: () {
-                                                        // controller.lauchgoogleMaps("18.516726", "73.856255");
+                                                        controller
+                                                                .indexParsing =
+                                                            index;
+                                                        log("This is my index ${controller.indexParsing}");
+                                                        controller.source =
+                                                            controller
+                                                                .filteredTrips[
+                                                                    index]
+                                                                .startRoutepoint;
+                                                        log("This is my source ${controller.filteredTrips[controller.indexParsing].startRoutepoint}");
+                                                        controller.destination =
+                                                            controller
+                                                                .filteredTrips[
+                                                                    index]
+                                                                .endRoutepoint;
+                                                        log("This is my destination : ${controller.filteredTrips[index].endRoutepoint}");
+                                                        controller.startTime =
+                                                            controller
+                                                                .filteredTrips[
+                                                                    index]
+                                                                .startTime;
+                                                        log("This is start time ${controller.startTime}");
+                                                        controller.busNumber =
+                                                            controller
+                                                                .filteredTrips[
+                                                                    index]
+                                                                .busNumber;
+                                                        log("This is bus number ${controller.busNumber}");
+                                                        controller.routeId =
+                                                            controller
+                                                                .filteredTrips[
+                                                                    index]
+                                                                .routeId;
+
+                                                        log("This is route number ${controller.routeId}");
+
+                                                        controller
+                                                            .AllSubStopsDetails(
+                                                                controller
+                                                                    .filteredTrips[
+                                                                        index]
+                                                                    .routeId
+                                                                    .toString());
+
                                                         Get.toNamed(
-                                                            "/ViewBusDetails",
-                                                            arguments: [
-                                                              controller
-                                                                      .filteredTrips[
-                                                                  index]
-                                                            ]);
+                                                            "/ViewBusDetails");
                                                       },
                                                       leading: const Icon(
                                                           Icons.bus_alert),

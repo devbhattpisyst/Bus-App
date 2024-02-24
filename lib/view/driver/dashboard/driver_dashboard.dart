@@ -151,14 +151,22 @@ class DriverDashboard extends GetView<DriverDashController> {
                                           width: size.width,
                                           height: size.height * .07,
                                           child: ElevatedButton(
-                                            onPressed:
-                                                controller.tripStarted.value
-                                                    ? null
-                                                    : () {
-                                                        controller.tripStarted
-                                                            .value = true;
-                                                        controller.startTrip();
-                                                      },
+                                            onPressed: controller
+                                                            .driverTripdetails[
+                                                                controller
+                                                                    .currentTripindex]
+                                                            .tripStatus ==
+                                                        "1" &&
+                                                    controller
+                                                            .driverTripdetails[
+                                                                controller
+                                                                    .currentTripindex]
+                                                            .tripStatus ==
+                                                        4
+                                                ? null
+                                                : () {
+                                                    controller.startTrip();
+                                                  },
                                             child: Text(
                                               "Start",
                                             ),
@@ -173,13 +181,15 @@ class DriverDashboard extends GetView<DriverDashController> {
                                           height: size.height * .07,
                                           child: ElevatedButton(
                                             onPressed: controller
-                                                    .tripStarted.value
-                                                ? () {
-                                                    controller.tripReached
-                                                        .value = true;
+                                                        .driverTripdetails[
+                                                            controller
+                                                                .currentTripindex]
+                                                        .tripStatus ==
+                                                    "4"
+                                                ? null
+                                                : () {
                                                     controller.reachedTrip();
-                                                  }
-                                                : null,
+                                                  },
                                             child: Text(
                                               "Reached",
                                             ),
@@ -193,22 +203,39 @@ class DriverDashboard extends GetView<DriverDashController> {
                                           width: size.width,
                                           height: size.height * .07,
                                           child: ElevatedButton(
-                                            onPressed:
-                                                controller.tripStarted.value &&
-                                                        !controller
-                                                            .tripReached.value
-                                                    ? () {
-                                                        controller.sosOccured
-                                                            .value = true;
-                                                        controller.sos(context);
-                                                      }
-                                                    : null,
+                                            onPressed: controller
+                                                        .driverTripdetails[
+                                                            controller
+                                                                .currentTripindex]
+                                                        .tripStatus ==
+                                                    "4"
+                                                ? null
+                                                : () {
+                                                    controller.sos(context);
+                                                  },
                                             child: Text(
                                               "SOS",
                                             ),
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: SizedBox(
+                                            width: size.width,
+                                            height: size.height,
+                                            child: ElevatedButton(
+                                                onPressed: controller
+                                                            .driverTripdetails[
+                                                                controller
+                                                                    .currentTripindex]
+                                                            .tripStatus ==
+                                                        "4"
+                                                    ? null
+                                                    : () {},
+                                                child: Text("Resume")),
+                                          )),
                                     ],
                                   ),
                                 ),

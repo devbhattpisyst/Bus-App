@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewBusDetails extends GetView<DriverDashController> {
+class ViewBusDetails extends GetView<DashboardController> {
   const ViewBusDetails({super.key});
 
   @override
@@ -60,11 +60,11 @@ class ViewBusDetails extends GetView<DriverDashController> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "Bus no : ${Get.arguments?[0]?.busNumber ?? ""}",
+                                "Bus no : ${controller.busNumber}",
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
-                                "Route no : ${Get.arguments?[0]?.routeId ?? ""}",
+                                "Route no : ${controller.routeId}",
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ],
@@ -76,12 +76,12 @@ class ViewBusDetails extends GetView<DriverDashController> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "${Get.arguments[0].startRoutepoint}",
+                                controller.source.toString(),
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Icon(Icons.arrow_right_alt_outlined),
                               Text(
-                                "${Get.arguments[0].endRoutepoint}",
+                                controller.destination.toString(),
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ],
@@ -91,7 +91,7 @@ class ViewBusDetails extends GetView<DriverDashController> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Text(
-                              "${DateFormat("hh:mm a").format(DateTime.parse(Get.arguments[0].startTime))}",
+                              "${DateFormat("hh:mm a").format(DateTime.parse(controller.startTime))}",
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                           ),
@@ -101,38 +101,40 @@ class ViewBusDetails extends GetView<DriverDashController> {
                   ),
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: 15,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 0,
-                        ),
-                        child: Card(
-                          elevation: 5,
-                          child: ListTile(
-                            onTap: () {
-                              // controller.lauchgoogleMaps(
-                              //     "18.516726", "73.856255");
-                              var lat = "18.516726";
-                              var long = "73.856255";
-                              final url = Uri.parse(
-                                  'https://www.google.com/maps/search/?api=1&query=$lat,$long');
-                              launchUrl(url);
-                            },
-                            leading: const Icon(Icons.paragliding_outlined),
-                            title: const Text("Gadital bus stop"),
-                            // subtitle: Text("view location"),
-                            // dense: true,
-                            trailing: const Chip(label: Text("view location")),
-                          ),
-                        ),
-                      );
-                    }),
-              )
+              Obx(() => Expanded(
+                    child: ListView.builder(
+                        itemCount: controller.substops.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 0,
+                            ),
+                            child: Card(
+                              elevation: 5,
+                              child: ListTile(
+                                onTap: () {
+                                  // controller.lauchgoogleMaps(
+                                  //     "18.516726", "73.856255");
+                                  var lat = "18.516726";
+                                  var long = "73.856255";
+                                  final url = Uri.parse(
+                                      'https://www.google.com/maps/search/?api=1&query=$lat,$long');
+                                  launchUrl(url);
+                                },
+                                leading: const Icon(Icons.paragliding_outlined),
+                                title: Text(
+                                    controller.substops[index].busStopName),
+                                // subtitle: Text("view location"),
+                                // dense: true,
+                                trailing:
+                                    const Chip(label: Text("view location")),
+                              ),
+                            ),
+                          );
+                        }),
+                  ))
             ],
           ),
         ),

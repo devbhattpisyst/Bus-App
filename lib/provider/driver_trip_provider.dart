@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bus/models/SubRoutes/get_subroutes_response_model.dart';
 import 'package:bus/models/driver/driver_login_model.dart';
 import 'package:bus/models/driver/driver_signup_model.dart';
 import 'package:bus/utils/constants.dart';
@@ -36,6 +37,35 @@ class DriverTripProvider extends GetConnect {
       return null;
     }
   }
+
+  // Future<SubRoutesResponseModel?> getAllSubRoutesFromAStop(jsonArray) async {
+  //   try {
+  //     Response response = await post(
+  //       "${Constants.baseUrl}Bus/fetchSubroutesByRouteID",
+  //       jsonEncode(jsonArray),
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //     );
+  //     final responseBody = response.bodyString.toString();
+  //     log("this is our response body of subroutes -->$responseBody");
+
+  //     if (response.statusCode == 200) {
+  //       var parsedResponse = json.decode(responseBody);
+  //       if (parsedResponse['success'] == true) {
+  //         log("Succeed ho gaye hai...");
+  //         return subRoutesResponseModelFromJson(responseBody);
+  //       } else {
+  //         return null;
+  //       }
+  //     } else {
+  //       log("Request failed with status code -->${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar("Error", e.toString());
+  //     return null;
+  //   }
+  // }
 
   Future<DriverLoginResponseModel?> ActiveBusTrips(jsonArray) async {
     print(jsonArray);

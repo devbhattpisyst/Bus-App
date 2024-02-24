@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-// To parse this JSON data, do
-// final driverTripDetailsList = List<DriverTripDetails>.from(jsonString.map((x) => DriverTripDetails.fromJson(x)));
-
 class DriverTripDetails {
   DriverTripDetails({
     required this.driverID,
@@ -34,21 +31,23 @@ class DriverTripDetails {
   final String startRoutePoint;
   final String endRoutePoint;
 
-  factory DriverTripDetails.fromJson(Map<String, dynamic> json) => DriverTripDetails(
-        driverID: json["DriverID"],
-        firstName: json["FirstName"],
-        lastName: json["LastName"],
-        email: json["Email"],
-        mobile: json["Mobile"],
-        password: json["Password"],
-        status: json["Status"],
-        createdDate: json["CreatedDate"],
-        updatedDate: json["UpdatedDate"],
-        tripId: json["tripId"],
-        busNumber: json["BusNumber"],
-        startRoutePoint: json["startRoutepoint"],
-        endRoutePoint: json["endRoutepoint"],
-      );
+  factory DriverTripDetails.fromJson(Map<String, dynamic> json) {
+    return DriverTripDetails(
+      driverID: json["DriverID"] ?? "",
+      firstName: json["FirstName"] ?? "",
+      lastName: json["LastName"] ?? "",
+      email: json["Email"] ?? "",
+      mobile: json["Mobile"] ?? "",
+      password: json["Password"] ?? "",
+      status: json["Status"] ?? "",
+      createdDate: json["CreatedDate"] ?? "",
+      updatedDate: json["UpdatedDate"] ?? "",
+      tripId: json["tripId"] ?? "",
+      busNumber: json["BusNumber"] ?? "",
+      startRoutePoint: json["startRoutepoint"] ?? "",
+      endRoutePoint: json["endRoutepoint"] ?? "",
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "DriverID": driverID,

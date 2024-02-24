@@ -54,20 +54,22 @@ class DriverDashController extends GetxController {
     }
   }
 
-  startTrip() {
-    DriverTripProvider().startTrip(
-        {"tripId": driverTripdetails[currentTripindex].tripId}).then((value) {
+  startTrip() async {
+    await DriverTripProvider()
+        .startTrip({"tripId": driverTripdetails[currentTripindex].tripId}).then(
+            (value) async {
       if (value != null) {
+        await refreshData();
         startRunner();
       }
     });
   }
 
 // bus number = 6789 , trip number = 24 , hadapasar --> swargate.
-  ActivatedTrips() {
+  ActivatedTrips() async {
     log("Calling this function Activated Trips");
 
-    DriverTripProvider().ActiveBusTrips({
+    await DriverTripProvider().ActiveBusTrips({
       "DriverID": driverTripdetails[currentTripindex].driverID.toString()
     }).then((value) {
       log("The bus id is : " + driverTripdetails[currentTripindex].busId);
@@ -101,16 +103,19 @@ class DriverDashController extends GetxController {
     });
   }
 
-  reachedTrip() {
-    DriverTripProvider().reachedTrip(
-        {"tripId": driverTripdetails[currentTripindex].tripId}).then((value) {
+  reachedTrip() async {
+    await DriverTripProvider().reachedTrip({
+      "tripId": driverTripdetails[currentTripindex].tripId
+    }).then((value) async {
       if (value != null) {
+        await refreshData();
         timer.cancel();
       }
     });
   }
 
   sendSOS(context) async {
+    await refreshData();
     Position loc = await determinePosition();
     DriverTripProvider().sosTrip({
       "tripId": driverTripdetails[currentTripindex].tripId,

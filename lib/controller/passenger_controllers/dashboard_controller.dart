@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' show log;
 import 'package:bus/geo/locator.dart';
+import 'package:bus/models/SubRoutes/get_subroutes_response_model.dart';
 import 'package:bus/models/Trips/getTripsResponse.dart';
 import 'package:bus/models/passenger/all_bus_stops_model.dart';
 import 'package:bus/models/passenger/all_trips_model.dart';
@@ -20,16 +21,26 @@ class DashboardController extends GetxController
   var loading = true.obs;
   bool emptyData = false;
   var busStopsSorted = <BusStop>[].obs;
+  var substops = <SubRoutes>[].obs;
+
+  var source;
+  var destination;
+  var startTime;
+  var routeId;
+  var busNumber;
 
   var busStops = <BusStop>[].obs;
   //var busStopsDetails = <Trip>[].obs;
   var filteredTrips = <Trip>[].obs;
+
   var busstoparray = <Trip>[].obs;
+
   var trips = <TripData>[].obs;
   static var latitude;
   static var longitude;
   String terminal1 = "";
   String terminal2 = "";
+  var indexParsing = 0;
 
   var currentIndex = 0;
 
@@ -40,12 +51,22 @@ class DashboardController extends GetxController
 
     latitude = loc?.latitude;
     longitude = loc?.longitude;
+
     tabController =
         TabController(length: 2, vsync: this); // Initialize TabController here
 
     await getBusStopsSortedByDistance();
-    // await getBusStopDetails(Trip.fromJson({}).busId);
     getTrips();
+  }
+
+  AllSubStopsDetails(routeId) async {
+    await BusStopProvider().getAllSubRoutesFromAStop(
+        {"RouteID": routeId.toString()}).then((value) {
+      if (value != null) {
+        log("i am accessing value");
+        substops.value = value.payload.data;
+      }
+    });
   }
 
   // SearchStartRoutePoint() {
@@ -94,6 +115,7 @@ class DashboardController extends GetxController
   }
 
   getSubRoutes() async {
+    filteredTrips.clear();
     // loading.value = true;
     log("The value of terminal 1 is : " + terminal1.toString());
     log("The value of terminal 2 is : " + terminal2.toString());
