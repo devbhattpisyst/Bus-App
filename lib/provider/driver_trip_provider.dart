@@ -77,8 +77,8 @@ class DriverTripProvider extends GetConnect {
           });
       var responseBody = response.bodyString.toString();
 
-      log(responseBody.toString());
-
+      log("This is response body of active bus trips..." +
+          response.bodyString.toString());
       if (response.statusCode == 200) {
         var parsedResponse = json.decode(responseBody);
         if (parsedResponse['success'] == true) {

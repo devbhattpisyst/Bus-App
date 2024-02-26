@@ -13,7 +13,7 @@ class ComeInDashboard extends GetView<DashboardController> {
     if (controller.busstoparray.length == 0) {
       return Scaffold(
           body: Center(
-        child: Text("No Buses from this stoppage..."),
+        child: Text("No Buses from this bus stop yet..."),
       ));
     } else {
       return Scaffold(
@@ -122,7 +122,7 @@ class ComeInDashboard extends GetView<DashboardController> {
                   'Bus Number: ${controller.busstoparray[index].busNumber}'),
               onTap: () {
                 launchUrl(Uri.parse(
-                    'https://www.google.com/maps/search/?api=1&query=${DashboardController.latitude},${DashboardController.longitude}'));
+                    'https://www.google.com/maps/search/?api=1&query=${controller.latitude},${controller.longitude}'));
               },
             ),
           ),

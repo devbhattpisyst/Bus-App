@@ -16,7 +16,7 @@ class DriverLoginController extends GetxController {
     super.onInit();
   }
 
-  var driverTripdetails = <DriverData>[];
+  var driverTripdetails = <DriverData>[].obs;
   // var data = Get.arguments[0]['data'];
 
   loginAsDriver() async {
@@ -30,7 +30,7 @@ class DriverLoginController extends GetxController {
           if (loginvalue != null) {
             if (loginvalue.success == true) {
               Get.snackbar("Success", loginvalue.payload.message);
-              driverTripdetails = loginvalue.payload.data;
+              driverTripdetails.value = loginvalue.payload.data;
               log("This is our data feild");
               // log("driver Trip details \n" + driverTripdetails.toList().toString());
               Get.offAndToNamed("/DriverDashboard", arguments: [

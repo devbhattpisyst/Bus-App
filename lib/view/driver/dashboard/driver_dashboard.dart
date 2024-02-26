@@ -26,227 +26,225 @@ class DriverDashboard extends GetView<DriverDashController> {
             "Drive a Bus",
           ),
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            // Refresh logic here
-            await controller
-                .refreshData(); // Assuming you have a method to refresh your data
-          },
-          child: isNoTripAssigned
-              ? Center(
-                  child: Text('No Trips assigned yet'),
-                )
-              : Obx(
-                  () {
-                    return SingleChildScrollView(
-                      child: SafeArea(
-                          child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: SizedBox(
-                          height: size.height,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width: size.width,
-                                height: size.height * .3,
-                                child: Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Icon(
-                                              Icons.bus_alert,
-                                            ),
-                                            Text(
-                                              "Todays Assigned Bus",
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                            Icon(
-                                              Icons.bus_alert,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: size.height * .02,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: Row(
+        body: Obx(
+          () => RefreshIndicator(
+            onRefresh: () async {
+              // Refresh logic here
+              await controller
+                  .refreshData(); // Assuming you have a method to refresh your data
+            },
+            child: SafeArea(
+                child: controller.driverTripdetails.isEmpty
+                    ? SizedBox(
+                        height: size.height,
+                        child: Center(
+                          child: Text('No Trips assigned yet'),
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        child: SafeArea(
+                            child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: SizedBox(
+                            height: size.height,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: size.width,
+                                  height: size.height * .3,
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(
-                                                "Bus no : ${controller.driverTripdetails[controller.currentTripindex].busNumber}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
+                                              Icon(
+                                                Icons.bus_alert,
                                               ),
                                               Text(
-                                                "Trip no : ${controller.driverTripdetails[controller.currentTripindex].tripId}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
+                                                "Todays Assigned Bus",
+                                                style: TextStyle(
+                                                    color: Colors.black),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                "${controller.driverTripdetails[controller.currentTripindex].startRoutePoint}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge,
-                                              ),
-                                              Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
-                                                "${controller.driverTripdetails[controller.currentTripindex].endRoutePoint}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge,
+                                              Icon(
+                                                Icons.bus_alert,
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: Text(
-                                            "${DateFormat("hh:mm a").format(DateTime.parse(controller.driverTripdetails[controller.currentTripindex].startTime))}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
+                                          SizedBox(
+                                            height: size.height * .02,
                                           ),
-                                        )
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  "Bus no : ${controller.driverTripdetails[controller.currentTripindex].busNumber}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall,
+                                                ),
+                                                Text(
+                                                  "Trip no : ${controller.driverTripdetails[controller.currentTripindex].tripId}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  "${controller.driverTripdetails[controller.currentTripindex].startRoutePoint}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ),
+                                                Icon(Icons
+                                                    .arrow_right_alt_outlined),
+                                                Text(
+                                                  "${controller.driverTripdetails[controller.currentTripindex].endRoutePoint}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: Text(
+                                              "${DateFormat("hh:mm a").format(DateTime.parse(controller.driverTripdetails[controller.currentTripindex].startTime))}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: SizedBox(
-                                          width: size.width,
-                                          height: size.height * .07,
-                                          child: ElevatedButton(
-                                            onPressed: controller
-                                                            .driverTripdetails[
-                                                                controller
-                                                                    .currentTripindex]
-                                                            .tripStatus ==
-                                                        "1" &&
-                                                    controller
-                                                            .driverTripdetails[
-                                                                controller
-                                                                    .currentTripindex]
-                                                            .tripStatus ==
-                                                        4
-                                                ? null
-                                                : () {
-                                                    controller.startTrip();
-                                                  },
-                                            child: Text(
-                                              "Start",
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: SizedBox(
-                                          width: size.width,
-                                          height: size.height * .07,
-                                          child: ElevatedButton(
-                                            onPressed: controller
-                                                        .driverTripdetails[
-                                                            controller
-                                                                .currentTripindex]
-                                                        .tripStatus ==
-                                                    "4"
-                                                ? null
-                                                : () {
-                                                    controller.reachedTrip();
-                                                  },
-                                            child: Text(
-                                              "Reached",
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: SizedBox(
-                                          width: size.width,
-                                          height: size.height * .07,
-                                          child: ElevatedButton(
-                                            onPressed: controller
-                                                        .driverTripdetails[
-                                                            controller
-                                                                .currentTripindex]
-                                                        .tripStatus ==
-                                                    "4"
-                                                ? null
-                                                : () {
-                                                    controller.sos(context);
-                                                  },
-                                            child: Text(
-                                              "SOS",
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 10),
                                           child: SizedBox(
                                             width: size.width,
-                                            height: size.height,
+                                            height: size.height * 0.07,
                                             child: ElevatedButton(
-                                                onPressed: controller
-                                                            .driverTripdetails[
-                                                                controller
-                                                                    .currentTripindex]
-                                                            .tripStatus ==
-                                                        "4"
-                                                    ? null
-                                                    : () {},
-                                                child: Text("Resume")),
-                                          )),
-                                    ],
+                                              onPressed: controller
+                                                          .driverTripdetails[
+                                                              controller
+                                                                  .currentTripindex]
+                                                          .tripStatus ==
+                                                      "4"
+                                                  ? () {
+                                                      controller.startTrip();
+                                                    }
+                                                  : null,
+                                              child: Text("Start"),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: SizedBox(
+                                            width: size.width,
+                                            height: size.height * 0.07,
+                                            child: ElevatedButton(
+                                              onPressed: controller
+                                                              .driverTripdetails[
+                                                                  controller
+                                                                      .currentTripindex]
+                                                              .tripStatus ==
+                                                          "1" &&
+                                                      controller
+                                                              .driverTripdetails[
+                                                                  controller
+                                                                      .currentTripindex]
+                                                              .tripStatus ==
+                                                          "3"
+                                                  ? () {
+                                                      controller.reachedTrip();
+                                                    }
+                                                  : null,
+                                              child: Text("Reached"),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: SizedBox(
+                                            width: size.width,
+                                            height: size.height * 0.07,
+                                            child: ElevatedButton(
+                                              onPressed: controller
+                                                          .driverTripdetails[
+                                                              controller
+                                                                  .currentTripindex]
+                                                          .tripStatus ==
+                                                      "1"
+                                                  ? () {
+                                                      controller.sos(context);
+                                                    }
+                                                  : null,
+                                              child: Text("SOS"),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: SizedBox(
+                                            width: size.width,
+                                            height: size.height * 0.07,
+                                            child: controller
+                                                        .driverTripdetails[
+                                                            controller
+                                                                .currentTripindex]
+                                                        .tripStatus ==
+                                                    "3"
+                                                ? null
+                                                : Center(
+                                                    child: Text(
+                                                        "Your Bus is broken Please Refresh"),
+                                                  ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
+                        )),
                       )),
-                    );
-                  },
-                ),
+          ),
         ));
   }
 

@@ -117,8 +117,8 @@ class ViewBusDetails extends GetView<DashboardController> {
                                 onTap: () {
                                   // controller.lauchgoogleMaps(
                                   //     "18.516726", "73.856255");
-                                  var lat = "18.516726";
-                                  var long = "73.856255";
+                                  var lat = controller.latitude;
+                                  var long = controller.longitude;
                                   final url = Uri.parse(
                                       'https://www.google.com/maps/search/?api=1&query=$lat,$long');
                                   launchUrl(url);

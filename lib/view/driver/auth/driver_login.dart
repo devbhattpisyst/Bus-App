@@ -143,7 +143,7 @@ class DriverLogin extends GetView<DriverLoginController> {
                                     ? "Please Enter Password"
                                     : null,
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(  
+                                  contentPadding: EdgeInsets.symmetric(
                                       horizontal: size.height * .01,
                                       vertical: size.height * .01),
                                   hintText: "Bus@123",

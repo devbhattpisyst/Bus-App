@@ -20,6 +20,7 @@ class PassengerLoginProvider extends GetConnect {
       if (response == null) {
         return null;
       }
+      log("this is logged in response --> " + response.bodyString.toString());
       print("body \n" + body['error']['code'].toString());
       if (response.statusCode == 200) {
         if (body['error']['code'] == 0)

@@ -62,7 +62,6 @@ class Dashboard extends GetView<DashboardController> {
                           tabs: [
                             GestureDetector(
                               onTap: () async {
-                                print("hey");
                                 await controller.getBusStopsSortedByDistance();
                               },
                               child: const Tab(
@@ -358,7 +357,6 @@ class Dashboard extends GetView<DashboardController> {
                                                                         index]
                                                                     .routeId
                                                                     .toString());
-
                                                         Get.toNamed(
                                                             "/ViewBusDetails");
                                                       },

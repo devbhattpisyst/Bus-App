@@ -36,8 +36,8 @@ class DashboardController extends GetxController
   var busstoparray = <Trip>[].obs;
 
   var trips = <TripData>[].obs;
-  static var latitude;
-  static var longitude;
+  var latitude;
+  var longitude;
   String terminal1 = "";
   String terminal2 = "";
   var indexParsing = 0;
@@ -68,33 +68,13 @@ class DashboardController extends GetxController
       }
     });
   }
-
-  // SearchStartRoutePoint() {
-  //   filteredTrips.clear(); // Clear the previous results
-  //   log("calling....");
-  //   filteredTrips.addAll(trips.where((trip) {
-  //     return trip.startRoutePoint
-  //             .toLowerCase()
-  //             .contains(terminal1.toLowerCase()) &&
-  //         trip.endRoutePoint.toLowerCase().contains(terminal2.toLowerCase());
-  //   }).toList());
-  // }
-
-  // SearchEndRoutePoint() {
-  //   filteredTrips.clear();
-  //   log("Calling....");
-  //   filteredTrips.addAll(trips.where((trip) {
-  //     return trip.endRoutePoint
-  //             .toLowerCase()
-  //             .contains(terminal2.toLowerCase()) &&
-  //         trip.startRoutePoint.toLowerCase().contains(terminal1.toLowerCase());
-  //   }).toList());
-  // }
+  // kharadi --> hinjewadi.
 
   getStopDetails(busstop) async {
     // loading.value = true; // Show loading indicator
-
+    busstoparray.clear();
     await BusStopProvider().getstopsdetails({"busstop": busstop}).then((value) {
+      busstoparray.clear();
       log("responce => ${jsonDecode(jsonEncode(value))}");
       log("hie i am sid");
       if (value != null && value.payload.data.isNotEmpty) {
@@ -103,7 +83,7 @@ class DashboardController extends GetxController
       } else {
         // Handle the case when the data is null or empty
         log("Data is null or empty");
-        busstoparray.clear(); // Set an empty list to clear any existing data
+        // Set an empty list to clear any existing data
         emptyData = true;
       }
     }).catchError((error) {
