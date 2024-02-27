@@ -72,44 +72,13 @@ class Dashboard extends GetView<DashboardController> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer, // Light purple color
-                            ),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Search Bus Stops',
-                                prefixIcon: Icon(Icons.search),
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                              ),
-                              onChanged: (value) {
-                                // Handle onChanged event here
-                                controller.busStopsFilter = value.toString();
-                                controller.filterBusStopsList();
-
-                                // Implement your search logic here
-                              },
-                            ),
-                          )
-                          // Add other widgets below the search bar if needed
-                        ],
-                      ),
                       Expanded(
                           child: SizedBox(
                         width: size.width,
                         child: TabBarView(
                             controller: controller.tabController,
                             children: [
-                              BusStopList(),
+                              BusStopList(context, size),
                               Column(
                                 children: [
                                   Container(
@@ -459,33 +428,69 @@ class Dashboard extends GetView<DashboardController> {
     );
   }
 
-  ListView BusStopList() {
-    return ListView.builder(
-        itemCount: controller.filteredBusStops.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 10,
+  Widget BusStopList(context, size) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Theme.of(context)
+                .colorScheme
+                .primaryContainer, // Light purple color
+          ),
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Search Bus Stops',
+              prefixIcon: Icon(Icons.search),
+              border: InputBorder.none,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             ),
-            child: Card(
-              child: ListTile(
-                onTap: () async {
-                  log("Calling index : ${index}");
-                  log("Parameter passed is :${controller.filteredBusStops[index].busStopID}");
-                  await controller.getStopDetails(
-                      controller.filteredBusStops[index].busStopID);
-                  Get.toNamed("/ComeIn");
-                },
-                leading: const Icon(Icons.bus_alert),
-                title: Text(controller.filteredBusStops[index].busStopName),
-                // subtitle: Text("view location"),
-                // dense: true,
-                trailing: const Chip(label: Text("Trip Details")),
-              ),
-            ),
-          );
-        });
+            onChanged: (value) {
+              // Handle onChanged event here
+              controller.busStopsFilter = value.toString();
+              controller.filterBusStopsList();
+
+              // Implement your search logic here
+            },
+          ),
+        ),
+
+        //
+
+        Expanded(
+          // height: size.height * .7,
+          child: ListView.builder(
+              itemCount: controller.filteredBusStops.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 10,
+                  ),
+                  child: Card(
+                    child: ListTile(
+                      onTap: () async {
+                        log("Calling index : ${index}");
+                        log("Parameter passed is :${controller.filteredBusStops[index].busStopID}");
+                        await controller.getStopDetails(
+                            controller.filteredBusStops[index].busStopID);
+                        Get.toNamed("/ComeIn");
+                      },
+                      leading: const Icon(Icons.bus_alert),
+                      title:
+                          Text(controller.filteredBusStops[index].busStopName),
+                      // subtitle: Text("view location"),
+                      // dense: true,
+                      trailing: const Chip(label: Text("Trip Details")),
+                    ),
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
   }
 }
