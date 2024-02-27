@@ -72,6 +72,37 @@ class Dashboard extends GetView<DashboardController> {
                           ],
                         ),
                       ),
+                      Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer, // Light purple color
+                            ),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: 'Search Bus Stops',
+                                prefixIcon: Icon(Icons.search),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                              ),
+                              onChanged: (value) {
+                                // Handle onChanged event here
+                                controller.busStopsFilter = value.toString();
+                                controller.filterBusStopsList();
+
+                                // Implement your search logic here
+                              },
+                            ),
+                          )
+                          // Add other widgets below the search bar if needed
+                        ],
+                      ),
                       Expanded(
                           child: SizedBox(
                         width: size.width,
@@ -357,6 +388,9 @@ class Dashboard extends GetView<DashboardController> {
                                                                         index]
                                                                     .routeId
                                                                     .toString());
+                                                        // controller
+                                                        //     .lati =
+                                                        //         .longi =
                                                         Get.toNamed(
                                                             "/ViewBusDetails");
                                                       },
@@ -427,7 +461,7 @@ class Dashboard extends GetView<DashboardController> {
 
   ListView BusStopList() {
     return ListView.builder(
-        itemCount: controller.busStopsSorted.length,
+        itemCount: controller.filteredBusStops.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           return Padding(
@@ -439,13 +473,13 @@ class Dashboard extends GetView<DashboardController> {
               child: ListTile(
                 onTap: () async {
                   log("Calling index : ${index}");
-                  log("Parameter passed is :${controller.busStopsSorted[index].busStopID}");
+                  log("Parameter passed is :${controller.filteredBusStops[index].busStopID}");
                   await controller.getStopDetails(
-                      controller.busStopsSorted[index].busStopID);
+                      controller.filteredBusStops[index].busStopID);
                   Get.toNamed("/ComeIn");
                 },
                 leading: const Icon(Icons.bus_alert),
-                title: Text(controller.busStopsSorted[index].busStopName),
+                title: Text(controller.filteredBusStops[index].busStopName),
                 // subtitle: Text("view location"),
                 // dense: true,
                 trailing: const Chip(label: Text("Trip Details")),

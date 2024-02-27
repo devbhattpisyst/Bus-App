@@ -117,10 +117,9 @@ class ViewBusDetails extends GetView<DashboardController> {
                                 onTap: () {
                                   // controller.lauchgoogleMaps(
                                   //     "18.516726", "73.856255");
-                                  var lat = controller.latitude;
-                                  var long = controller.longitude;
+
                                   final url = Uri.parse(
-                                      'https://www.google.com/maps/search/?api=1&query=$lat,$long');
+                                      'https://www.google.com/maps/search/?api=1&query=${controller.substops[index].latitude},${controller.substops[index].longitude}');
                                   launchUrl(url);
                                 },
                                 leading: const Icon(Icons.paragliding_outlined),

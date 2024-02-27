@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer' show log;
+import 'dart:developer';
 import 'package:bus/geo/locator.dart';
 import 'package:bus/models/SubRoutes/get_subroutes_response_model.dart';
 import 'package:bus/models/Trips/getTripsResponse.dart';
@@ -32,6 +32,7 @@ class DashboardController extends GetxController
   var busStops = <BusStop>[].obs;
   //var busStopsDetails = <Trip>[].obs;
   var filteredTrips = <Trip>[].obs;
+  var filteredBusStops = <BusStop>[].obs;
 
   var busstoparray = <Trip>[].obs;
 
@@ -40,9 +41,12 @@ class DashboardController extends GetxController
   var longitude;
   String terminal1 = "";
   String terminal2 = "";
+  String busStopsFilter = "";
   var indexParsing = 0;
 
   var currentIndex = 0;
+  var lati;
+  var longi;
 
   @override
   void onInit() async {
@@ -112,6 +116,16 @@ class DashboardController extends GetxController
     loading.value = false;
   }
 
+  void filterBusStopsList() {
+    filteredBusStops.clear();
+    log("Calling....");
+    filteredBusStops.addAll(busStopsSorted.where((trip) {
+      return trip.busStopName
+          .toLowerCase()
+          .contains(busStopsFilter.toLowerCase());
+    }).toList());
+  }
+
   // getstopsdetails() async {
   //   log("calling");
   //   await BusStopProvider().getstopsdetails({"busstop": busstop}).then((value) {
@@ -137,12 +151,14 @@ class DashboardController extends GetxController
   // }
 // --------------------------------------------------------------------------------
   getBusStopsSortedByDistance() async {
+    busStopsSorted.clear();
     log("calling");
     await BusStopProvider().getBusStopsSortedByDistance({
       "latitude": latitude,
       "longitude": longitude,
     }).then((value) {
       if (value != null) {
+        busStopsSorted.clear();
         busStopsSorted.value = value.payload.data;
         log("getBusStopsSortedByDistance => " + value.toString());
       }

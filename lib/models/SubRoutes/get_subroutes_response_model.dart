@@ -61,6 +61,8 @@ class SubRoutes {
     required this.createdDate,
     required this.updatedDate,
     required this.busStopName,
+    required this.latitude,
+    required this.longitude,
   });
 
   final String id;
@@ -70,16 +72,19 @@ class SubRoutes {
   final String createdDate;
   final String updatedDate;
   final String busStopName;
+  final String latitude;
+  final String longitude;
 
   factory SubRoutes.fromJson(Map<String, dynamic> json) => SubRoutes(
-        id: json["ID"] ?? "",
-        routeId: json["RouteID"] ?? "",
-        busStopId: json["BusStopID"] ?? "",
-        busStopOrder: json["BusStopOrder"] ?? "",
-        createdDate: json["CreatedDate"] ?? "",
-        updatedDate: json["UpdatedDate"] ?? "",
-        busStopName: json["BusStopName"] ?? "",
-      );
+      id: json["ID"] ?? "",
+      routeId: json["RouteID"] ?? "",
+      busStopId: json["BusStopID"] ?? "",
+      busStopOrder: json["BusStopOrder"] ?? "",
+      createdDate: json["CreatedDate"] ?? "",
+      updatedDate: json["UpdatedDate"] ?? "",
+      busStopName: json["BusStopName"] ?? "",
+      latitude: json["Latitude"] ?? "",
+      longitude: json["Longitude"] ?? "");
 
   Map<String, dynamic> toJson() => {
         "ID": id,

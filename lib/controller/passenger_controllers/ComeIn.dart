@@ -43,7 +43,6 @@ class ComeInDashboard extends GetView<DashboardController> {
                     height: size.height,
                     child: Column(
                       children: [
-                        SizedBox(),
                         Expanded(
                           child: SizedBox(
                             width: size.width,
@@ -60,9 +59,6 @@ class ComeInDashboard extends GetView<DashboardController> {
                                             .colorScheme
                                             .primaryContainer
                                             .withOpacity(.1),
-                                        child: Column(
-                                          children: [],
-                                        ),
                                       ),
                                     ],
                                   )
@@ -100,11 +96,11 @@ class ComeInDashboard extends GetView<DashboardController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${controller.busstoparray[index].driverFirstName} ${controller.busstoparray[index].driverLastName}',
+                    'From : ${controller.busstoparray[index].startRoutepoint} To : ${controller.busstoparray[index].endRoutepoint}',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 19,
+                        color: Colors.red),
                   ),
                   SizedBox(height: 4),
                   Text(
@@ -112,14 +108,16 @@ class ComeInDashboard extends GetView<DashboardController> {
                     style: TextStyle(color: Colors.blueAccent),
                   ),
                   Text(
-                    '${controller.busstoparray[index].startRoutepoint} -> ${controller.busstoparray[index].endRoutepoint}',
-                    style: TextStyle(color: Colors.redAccent),
+                    '${controller.busstoparray[index].driverFirstName} -> ${controller.busstoparray[index].driverLastName}',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
                   // Text('End Route Point: ${trip['endRoutepoint']}'),
                 ],
               ),
               subtitle: Text(
-                  'Bus Number: ${controller.busstoparray[index].busNumber}'),
+                  'Bus Number: ${controller.busstoparray[index].busNumber}',
+                  style: TextStyle(fontSize: 19)),
               onTap: () {
                 launchUrl(Uri.parse(
                     'https://www.google.com/maps/search/?api=1&query=${controller.latitude},${controller.longitude}'));

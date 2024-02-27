@@ -132,6 +132,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:bus/geo/locator.dart';
 import 'package:bus/models/driver/driver_login_model.dart';
 import 'package:bus/models/passenger/all_trips_model.dart';
@@ -147,12 +148,14 @@ import 'package:url_launcher/url_launcher.dart';
 class DriverDashController extends GetxController {
   TextEditingController descController = TextEditingController();
   var driverTripdetails = <DriverData>[].obs;
+  var lat;
+  var long;
 
   var currentTripindex = 0;
   late Timer timer;
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     driverTripdetails = RxList<DriverData>.from(Get.arguments[0]['data']);
 
@@ -210,11 +213,12 @@ class DriverDashController extends GetxController {
     });
   }
 
-  updatelocation(lat, long) {
+  updatelocation(lat, long) async {
+    Position cordinate = await determinePosition();
     DriverTripProvider().tripLocationUpdate({
       "BusId": driverTripdetails[currentTripindex].busId,
-      "latitude": 45,
-      "longitude": 90
+      "latitude": cordinate.latitude,
+      "longitude": cordinate.longitude
     });
   }
 
